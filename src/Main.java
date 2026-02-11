@@ -7,9 +7,16 @@ public class Main {
         avlTree.insert(125);
         avlTree.insert(77);
         avlTree.insert(76);
-        avlTree.delete(75);
+        avlTree.insert(79);
+        avlTree.insert(120);
+        System.out.println("Max is: " + avlTree.getMax());
+        System.out.println("Min is: " + avlTree.getMin());
 
-        System.out.println("done");
+        avlTree.insert(8);
+
+
+        System.out.println(avlTree.getSize());
+
 
     }
 }

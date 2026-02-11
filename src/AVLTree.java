@@ -76,7 +76,7 @@ public class AVLTree {
             }
             else{
                 //left right rotation
-                node = leftRotation(node);
+                node.left = leftRotation(node.left);
                 node = rightRotation(node);
             }
         }
@@ -88,7 +88,7 @@ public class AVLTree {
             }
             else{
                 //right left rotation
-                node = rightRotation(node);
+                node.right = rightRotation(node.right);
                 node = leftRotation(node);
             }
         }
@@ -173,7 +173,7 @@ public class AVLTree {
             }
             else{
                 //left right rotation
-                current = leftRotation(current);
+                current.left = leftRotation(current.left);
                 current = rightRotation(current);
             }
         }
@@ -185,7 +185,7 @@ public class AVLTree {
             }
             else{
                 //right left rotation
-                current = rightRotation(current);
+                current.right = rightRotation(current.right);
                 current = leftRotation(current);
             }
         }
@@ -206,8 +206,23 @@ public class AVLTree {
 
     public boolean search(int data) {
         // TODO: Call the recursive helper method (or implement iteratively)
+        return searchhelper(data,root);
+    }
+    public boolean searchhelper(int data, Node node){
+        if(node.data == data){
+            System.out.println("found it!");
+            return true;
+        }
+
+        else if(node.left!= null && data< node.data){
+            return searchhelper(data, node.left);
+        }
+        else if(node.right!= null && data > node.data){
+            return searchhelper(data, node.right);
+        }
         return false;
     }
+
 
     public int height(Node node) {
         // TODO: Implement this method
@@ -241,43 +256,91 @@ public class AVLTree {
 
     public int getSize() {
         // TODO: Call recursive helper method or implement iteratively
-        return 0;
+        return count;
     }
 
     public boolean isEmpty() {
         // TODO: Check if root is null
-        return false;
+        return (root == null);
     }
 
     public List<Integer> inorderTraversal() {
         List<Integer> result = new ArrayList<>();
         // TODO: Call recursive helper method with result list
-        return result;
+        return inorderHelper(root, result);
+    }
+    public List inorderHelper(Node current, List llist){
+        if(current.left != null ){
+            inorderHelper(current.left,llist);
+        }
+        llist.add(current.data);
+        if (current.right != null) {
+            inorderHelper(current.right,llist);
+        }
+        return llist;
     }
 
     public List<Integer> preorderTraversal() {
         List<Integer> result = new ArrayList<>();
         // TODO: Call recursive helper method with result list
-        return result;
+        return preorderHelper(root, result);
+    }
+    public List preorderHelper(Node current, List llist){
+        llist.add(current.data);
+        if(current.left != null ){
+            preorderHelper(current.left,llist);
+        }
+        if (current.right != null) {
+            preorderHelper(current.right,llist);
+        }
+        return llist;
     }
 
     public List<Integer> postorderTraversal() {
         List<Integer> result = new ArrayList<>();
         // TODO: Call recursive helper method with result list
-        return result;
+        return postorderHelper(root, result);
+    }
+    public List postorderHelper(Node current, List llist){
+        if(current.left != null ){
+            postorderHelper(current.left,llist);
+        }
+        if (current.right != null) {
+            postorderHelper(current.right,llist);
+        }
+        llist.add(current.data);
+        return llist;
     }
 
     public int getMin() {
         // TODO: Check if tree is empty, throw exception if so
         // TODO: Traverse to the leftmost node
         // TODO: Return the minimum value
-        return 0;
+        return minHelp(root);
+    }
+    public int minHelp(Node node){
+
+        if(node.left == null){
+            return node.data;
+        }
+        else{
+            return minHelp(node.left);
+        }
     }
 
     public int getMax() {
         // TODO: Check if tree is empty, throw exception if so
         // TODO: Traverse to the rightmost node
         // TODO: Return the maximum value
-        return 0;
+        return maxHelp(root);
+    }
+    public int maxHelp (Node node){
+
+        if(node.right == null){
+            return node.data;
+        }
+        else{
+            return maxHelp(node.right);
+        }
     }
 }
